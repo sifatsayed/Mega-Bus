@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Ticket</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Header and Menu Section-->
+    <header class="container">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a class="active" href="#">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!--Booking Section-->
+    <main class="main-content container">
+
+        <div class="booking-content">
+            <h1>Mega City Bus</h1>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+        </div>
+
+
+        <div class="booking-form">
+            <h3>Explore By Bus</h3>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">From</label>
+                    <input class="inp-style" type="text" name="" placeholder="Dhaka">
+                </div>
+                <div class="input-group">
+                    <label" for="">From</label>
+                    <input class="inp-style" type="text" name="" placeholder="Chittagone">
+                </div>
+            </div>
+
+            <div class="inputs">
+                <div class="input-group">
+                    <label" for="">Departure</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+                <div class="input-group">
+                    <label for="">Return</label>
+                    <input class="inp-style" type="date" name="">
+                </div>
+            </div>
+            <div class="inputs">
+                <div class="input-group f-class">
+                <div>
+                    <label for="">First Class (<span id="rent-total">$150</span>)</label>
+                    <input id="rent-count" class="inp-style inp-width" type="number" name="" value="1">
+                </div>
+                <div class="plus-minus-btn">
+                    <p><button onclick="handleRentChange(true,'rent')">+</button> <button onclick="handleRentChange(false,'rent')">-</button></p>
+                </div>
+            </div>
+                <div class="input-group f-class">
+                    <div>
+                        <label for="">Economy (<span id="economy-total">$100</span>)</label>
+                        <input id="economy-count" class="inp-style inp-width" type="number" name="" value="1">
+                    </div>
+                    <div class="plus-minus-btn">
+                        <p> <button onclick="handleRentChange(true,'economy')">+</button> <button onclick="handleRentChange(false,'economy')">-</button></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="calculations">
+                <div class="amount">
+                    <div class="left">
+                        <p>Subtotal</p>
+                    </div>
+                    <div class="right">
+                        <p id="sub-total">$500</p>
+                    </div>
+                </div>
+
+                <div class="amount">
+                    <div class="left">
+                        <p>Charge 10% VAT</p>
+                    </div>
+                    <div class="right">
+                        <p id="vat">$50</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="amount">
+                    <div class="left">
+                        <h4>Total</h4>
+                    </div>
+                    <div class="right">
+                        <p id="grand-total">$550</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-style">Book Now</button>
+        </div>
+
+        <script>
+            
+
+            function handleRentChange (isIncrease,fareRent){
+                const rentInput = document.getElementById(fareRent + '-count');
+                const rentCount = getInputValue(fareRent);
+                //const rentNewCount = rentCount - 1 ;
+                let rentNewCount = rentCount;
+                if(isIncrease === true){
+                    rentNewCount = rentCount + 1 ;
+                }
+                if(isIncrease === false && rentCount>0){
+                    rentNewCount = rentCount - 1 ;
+                }
+                rentInput.value = rentNewCount ;
+                //const rentTotal = rentNewCount * 150 ;
+                let rentTotal = 0 ;
+                if(fareRent === 'rent'){
+                    rentTotal = rentNewCount * 150;
+                }
+                if(fareRent === 'economy'){
+                    rentTotal = rentNewCount * 100 ;
+                }
+                document.getElementById(fareRent +'-total').innerText = '$' + rentTotal;
+                subTotal()
+
+                
+            }
+
+            function subTotal (){
+               const rentCount = getInputValue('rent');
+               const economyCount = getInputValue('economy');
+
+                const subTotal = rentCount * 150 + economyCount * 100 ;
+                document.getElementById('sub-total').innerText = '$' + subTotal;
+
+                const vat = Math.round(subTotal * 0.10);
+                document.getElementById('vat').innerText = '$' + vat ;
+
+                const grandTotal = subTotal + vat ;
+                document.getElementById('grand-total').innerText = '$' + grandTotal ;
+            }
+
+
+            function getInputValue (fareRent){
+                const fareRentInput = document.getElementById(fareRent +'-count');
+                const fareRentCount = parseInt(fareRentInput.value);
+                return fareRentCount ;
+            }
+
+
+
+
+
+
+
+
+
+
+
+            // document.getElementById('btn-increase').addEventListener('click', function(){
+            //     handleRentChange(true);
+            // })
+
+            // document.getElementById('btn-decrease').addEventListener('click',function(){
+            //      handleRentChange(false)
+            // })
+
+            // document.getElementById('btn-increase').addEventListener('click', function(){
+            //     const  rentInput = document.getElementById('rent-count');
+            //     const rentCount = parseInt(rentInput.value);
+            //     const rentNewCount = rentCount + 1 ;
+            //     rentInput.value = rentNewCount;
+            //     const rentTotal = rentNewCount * 150;
+            //     document.getElementById('rent-total').innerHTML = '$' + rentTotal ;
+            // })
+
+            // document.getElementById('btn-decrease').addEventListener('click',function(){
+            //     const rentInput = document.getElementById('rent-count');
+            //     const rentCount = parseInt(rentInput.value);
+            //     const rentNewCount = rentCount - 1 ;
+            //     rentInput.value = rentNewCount ;
+            //     const rentTotal = rentNewCount * 150 ;
+            //     document.getElementById('rent-total').innerText = '$' + rentTotal 
+            // })
+
+
+            
+            // document.getElementById('economy-increase').addEventListener('click',function(){
+            //     handleEconomyRent(true)
+            // })
+
+            // document.getElementById('economy-decrease').addEventListener('click',function(){
+            //     handleEconomyRent(false) ;
+            // })
+
+            // document.getElementById('economy-increase').addEventListener('click',function(){
+            //     const economyInput = document.getElementById('economy-count');
+            //     const economyCount = parseInt(economyInput.value);
+            //     const economyNewCount = economyCount + 1 ;
+            //     economyInput.value = economyNewCount ;
+            //     const economyTotal = economyNewCount * 100;
+            //     document.getElementById('economy-total').innerText = '$' + economyTotal ;
+            // })
+
+            // document.getElementById('economy-decrease').addEventListener('click',function(){
+            //     const economyInput = document.getElementById('economy-count');
+            //     const economyCount = parseInt(economyInput.value);
+            //     const economyNewCount = economyCount - 1 ;
+            //     economyInput.value = economyNewCount ;
+            //     const economyTotal = economyNewCount * 100;
+            //     document.getElementById('economy-total').innerText = '$' + economyTotal ;
+            // })
+
+
+
+            // function handleRentChange (isIncrease){
+            //     const rentInput = document.getElementById('rent-count');
+            //     const rentCount = parseInt(rentInput.value);
+            //     //const rentNewCount = rentCount - 1 ;
+            //     let rentNewCount = rentCount;
+            //     if(isIncrease === true){
+            //         rentNewCount = rentCount + 1 ;
+            //     }
+            //     if(isIncrease === false && rentCount>0){
+            //         rentNewCount = rentCount - 1 ;
+            //     }
+            //     rentInput.value = rentNewCount ;
+            //     const rentTotal = rentNewCount * 150 ;
+            //     document.getElementById('rent-total').innerText = '$' + rentTotal
+            // }
+
+            // function handleEconomyRent(isIncrease){
+            //     const economyInput = document.getElementById('economy-count');
+            //     const economyCount = parseInt(economyInput.value);
+            //     //const economyNewCount = economyCount - 1 ;
+            //     let economyNewCount = economyCount;
+            //     if(isIncrease === true){
+            //         economyNewCount = economyCount + 1 ;
+            //     }
+            //     if(isIncrease === false && economyCount> 0){
+            //         economyNewCount = economyCount - 1 ;
+            //     }
+            //     economyInput.value = economyNewCount ;
+            //     const economyTotal = economyNewCount * 100;
+            //     document.getElementById('economy-total').innerText = '$' + economyTotal ;
+            // }
+
+
+
+
+
+
+
+        </script>
+    </main>
+
+    <!--Thank You-->
+</body>
+
+</html>
